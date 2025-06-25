@@ -1,0 +1,1 @@
+<h1>Menunjukkan bahan <?= htmlspecialchars($bahan['nama']) ?></h1>

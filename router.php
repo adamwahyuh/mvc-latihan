@@ -1,6 +1,6 @@
 <?php
 
-function router ($route, $handler){
+function route($route, $handler){
 	$callback = $handler;
 	if (!is_callable($callback)){
 		if(!strpos($handler, '.php')){
@@ -27,19 +27,19 @@ function router ($route, $handler){
 		exit();
 	}
 	if (count($route_parts) != count($request_url_parts)){
-		var_dump("Dump");
+		// var_dump("Dump");
 		return;
 	}
 	$parameters = [];
 	for ($i = 0; $i < count($route_parts); $i++){
-	   $route_part = $route_parts[$i];
-	   if(preg_match("/^[$]/", $route_part)){
+	$route_part = $route_parts[$i];
+	if(preg_match("/^[$]/", $route_part)){
 		$route_part = ltrim($route_part, '$');
 		array_push($parameters, $request_url_parts[$i]);
 		$$route_part = $request_url_parts[$i];
-	   } else if ($route_parts[$i] != $request_url_parts[$i]){
+	} else if ($route_parts[$i] != $request_url_parts[$i]){
 		return;
-	   }
+	}
 	}
 	if (is_callable($callback)){
 		call_user_func_array($callback, $parameters);
@@ -48,3 +48,15 @@ function router ($route, $handler){
 	include_once __DIR__ . "/$handler";
 	exit();
 }
+
+function get($route, $handler){
+	if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+		route($route, $handler);
+	}
+}
+function post($route, $handler){
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		route($route, $handler);
+	}
+}
+
