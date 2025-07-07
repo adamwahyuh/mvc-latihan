@@ -60,3 +60,15 @@ function post($route, $handler){
 	}
 }
 
+function put($route, $handler){
+    if ($_SERVER['REQUEST_METHOD'] == 'PUT'){
+        route($route, $handler);
+    }
+}
+
+function delete($route, $handler){
+    if ($_SERVER['REQUEST_METHOD'] == 'DELETE'){
+        route($route, $handler);
+    }
+}
+
